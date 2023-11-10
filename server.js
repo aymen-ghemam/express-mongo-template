@@ -39,6 +39,8 @@ app.post(
     check("field", "Study field is required !").not().isEmpty(),
     // check("discord", "D is required !").not().isEmpty(),
     check("motivation", "Motivation is required !").not().isEmpty(),
+    check("exp", "Expectations field is required !").not().isEmpty(),
+    check("motivation", "Motivation is required !").not().isEmpty(),
     // check('motivation', 'FirstName length should be 3 to 30 characters').isLength({ min: 5, max: 50 }),
     // check('lastname', 'Lastname is required').not().isEmpty(),
     // check('lastname', 'LastName length should be 3 to 30 characters')
@@ -69,6 +71,10 @@ app.post(
         // level: req.body.level.toLowerCase(),
         discord: req.body.discord.toLowerCase(),
         motivation: req.body.motivation.toLowerCase(),
+        github: req.body.github,
+        opensource: req.body.opensource,
+        exp: req.body.exp,
+        stand: req.body.stand,
       });
 
       const result = await newParticipant.save();
