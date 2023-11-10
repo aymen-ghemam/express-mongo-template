@@ -44,6 +44,22 @@ const participantSchema = new Schema({
         type: String,
         trim: true,
     },
+    stand: {
+        type: String,
+        trim: true,
+    },
+    exp: {
+        type: String,
+        trim: true,
+    },
+    github: {
+        type: String,
+        trim: true,
+    },
+    opensource: {
+        type: String,
+        trim: true,
+    },
     deleted: {
         _state: {
             type: Boolean,
