@@ -69,7 +69,7 @@ app.post(
         field: req.body.field,
         // lastname: req.body.lastname.toLowerCase(),
         // level: req.body.level.toLowerCase(),
-        discord: req.body.discord.toLowerCase(),
+        discord: req.body.discord,
         motivation: req.body.motivation.toLowerCase(),
         github: req.body.github,
         opensource: req.body.opensource,
