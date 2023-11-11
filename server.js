@@ -36,7 +36,7 @@ app.post(
       min: 5,
       max: 50,
     }),
-    check("phone", "Invalid phone number!").isLength({ min: 10, max: 10 }),
+    check("phone", "Invalid phone number!").isLength({ min: 9 }),
     check("university", "university field is required !").not().isEmpty(),
     check("matricule", "ID number field is required !").not().isEmpty(),
     check("field", "Study field is required !").not().isEmpty(),
@@ -62,6 +62,14 @@ app.post(
         return res
           .status(200)
           .json({ err: true, errors: [{ msg: "Email already registered !" }] });
+
+      const exists1 = await Participant.findOne({
+        phone: req.body.phone,
+      }).exec();
+      if (exists1)
+        return res
+          .status(200)
+          .json({ err: true, errors: [{ msg: "Phone nummber already registered !" }] });
 
       const newParticipant = new Participant({
         name: req.body.name.toLowerCase(),
