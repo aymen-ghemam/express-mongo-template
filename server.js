@@ -30,7 +30,7 @@ app.post(
   "/register",
   [
     check("email", "email is required !").not().isEmpty(),
-    check("email", "Invalid email !").isEmail().isLength({ min: 10, max: 30 }),
+    check("email", "Invalid email !").isEmail(),
     check("name", "fullname is required !").not().isEmpty(),
     check("name", "Please enter your real name !").isLength({
       min: 5,
