@@ -6,7 +6,6 @@ const Participant = require("./models/Participant");
 const mongoose = require("mongoose");
 const { check, validationResult } = require("express-validator");
 
-console.log(process.env.MONGO_URI)
 mongoose
   .connect(process.env.MONGO_URI)
   .catch((error) => {
@@ -18,36 +17,24 @@ mongoose
 
 const app = express();
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "public")));
+// app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "/public/index.html"));
-});
+// app.get("/", (req, res) => {
+//   res.sendFile(path.join(__dirname, "/public/index.html"));
+// });
 
 app.post(
   "/register",
   [
     check("email", "email is required !").not().isEmpty(),
     check("email", "Invalid email !").isEmail(),
-    check("name", "fullname is required !").not().isEmpty(),
-    check("name", "Please enter your real name !").isLength({
+    check("name", "Fullname is required !").not().isEmpty(),
+    check("name", "Name is not valid !").isLength({
       min: 5,
-      max: 50,
     }),
-    check("phone", "Invalid phone number!").isLength({ min: 9 }),
-    check("university", "university field is required !").not().isEmpty(),
-    check("matricule", "ID number field is required !").not().isEmpty(),
-    check("field", "Study field is required !").not().isEmpty(),
-    // check("discord", "D is required !").not().isEmpty(),
-    check("motivation", "Motivation is required !").not().isEmpty(),
-    check("exp", "Expectations field is required !").not().isEmpty(),
-    check("motivation", "Motivation is required !").not().isEmpty(),
-    // check('motivation', 'FirstName length should be 3 to 30 characters').isLength({ min: 5, max: 50 }),
-    // check('lastname', 'Lastname is required').not().isEmpty(),
-    // check('lastname', 'LastName length should be 3 to 30 characters')
-    //                 .isLength({ min: 3, max: 30 })
+    check("phone", "Invalid phone number!").not().isEmpty(),
   ],
   async (req, res, next) => {
     try {
@@ -60,46 +47,37 @@ app.post(
       }).exec();
       if (exists)
         return res
-          .status(200)
+          .status(409)
           .json({ err: true, errors: [{ msg: "Email already registered !" }] });
 
-      const exists1 = await Participant.findOne({
-        phone: req.body.phone,
-      }).exec();
-      if (exists1)
-        return res
-          .status(200)
-          .json({ err: true, errors: [{ msg: "Phone nummber already registered !" }] });
+      // const exists1 = await Participant.findOne({
+      //   phone: req.body.phone,
+      // }).exec();
+      // if (exists1)
+      //   return res
+      //     .status(200)
+      //     .json({ err: true, errors: [{ msg: "Phone nummber already registered !" }] });
 
       const newParticipant = new Participant({
         name: req.body.name.toLowerCase(),
         email: req.body.email.toLowerCase(),
         phone: req.body.phone,
-        university: req.body.university,
-        matricule: req.body.matricule,
-        field: req.body.field,
-        // lastname: req.body.lastname.toLowerCase(),
-        // level: req.body.level.toLowerCase(),
-        discord: req.body.discord,
-        motivation: req.body.motivation.toLowerCase(),
-        github: req.body.github,
-        opensource: req.body.opensource,
-        exp: req.body.exp,
-        stand: req.body.stand,
+        availability: req.body.availability,
+        year: req.body.year,
       });
 
       const result = await newParticipant.save();
       if (result)
         return res
           .status(200)
-          .json({ err: false, msg: "Successfully registered !" });
+          .json({ err: false, msg: "Successfully registered!" });
       return res
-        .status(200)
-        .json({ err: true, errors: [{ msg: "Something went wrong !" }] });
+        .status(500)
+        .json({ err: true, errors: [{ msg: "Something went wrong!" }] });
     } catch (err) {
       console.log("something went wrong : " + err.message);
       return res
-        .status(200)
+        .status(500)
         .json({ err: true, errors: [{ msg: "Something went wrong !" }] });
     }
   }

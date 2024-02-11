@@ -7,11 +7,6 @@ const participantSchema = new Schema({
         trim: true,
         required: true
     },
-    // lastname: {
-    //     type: String,
-    //     trim: true,
-    //     required: true
-    // },
     email: {
         type: String,
         trim: true,
@@ -23,40 +18,11 @@ const participantSchema = new Schema({
         trim: true,
         required: true,
     },
-    university: 
-    {
+    year: {
         type: String,
         trim: true,
     },
-    matricule: {
-        type: String,
-        trim: true,
-    },
-    field: {
-        type: String,
-        trim: true,
-    },
-    motivation: {
-        type: String,
-        trim: true,
-    },
-    discord: {
-        type: String,
-        trim: true,
-    },
-    stand: {
-        type: String,
-        trim: true,
-    },
-    exp: {
-        type: String,
-        trim: true,
-    },
-    github: {
-        type: String,
-        trim: true,
-    },
-    opensource: {
+    availability: {
         type: String,
         trim: true,
     },
